@@ -1,0 +1,64 @@
+services:
+  postgres:
+    container_name : postgres
+    image : postgres
+    environment:
+      POSTGRES_USER : harisfaris17
+      POSTGRES_PASSWORD : password
+      PGDATA : /data/postgres/
+    volumes:
+      - postgres:/data/postgres/
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart : unless-stopped
+
+  pgadmin:
+    container_name : pgadmin
+    image : dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL : 'harisfaris17@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD : admin
+      #${PGADMIN_DEFAULT_PASSWORD :-admin}$
+      PGADMIN_CONFIG_SERVER_MODE : 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+  mysql:
+    container_name : mysql
+    image : mysql
+    environment:
+      # MYSQL_ROOT_USERNAME : harisfaris17
+      MYSQL_ROOT_PASSWORD : password
+    ports:
+      - "81:81"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - mysql
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+  mysql:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  adminer:
+  mysql:
