@@ -1,6 +1,27 @@
 server:
   port: 8080
 
+# hibernate:
+#   hbm2ddl:
+#     auto : create-drop
+
 spring:
   application:
     name: customer
+
+  datasource:
+    initialization-mode: always
+    url : jdbc:postgresql://localhost:5432/customer
+    username : harisfaris17
+    password : password
+    driver-class-name : org.postgresql.Driver
+  jpa : 
+    database : POSTGRESQL
+    properties : 
+      hibernate:
+        dialect : org.hibernate.dialect.PostgreSQLDialect
+        format_sql : 'true'
+    hibernate :
+      ddl-auto : create-drop
+    show-sql: 'true'
+
